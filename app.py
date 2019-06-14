@@ -25,7 +25,7 @@ def get_last_tweet_id():
 def get_query():
     return HASHTAG + ' -filter:retweets'
 
-def fetch_mentions(last_id, max_tweets=50):
+def fetch_mentions(last_id, max_tweets=200):
     query = get_query()
     matches = []
     for status in tweepy.Cursor(api.search, q=query,
