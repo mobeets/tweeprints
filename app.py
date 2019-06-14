@@ -31,9 +31,9 @@ def fetch_mentions(last_id, max_tweets=50):
     for status in tweepy.Cursor(api.search, q=query,
         count=max_tweets, # tweet_mode='extended',
         since_id=last_id, result_type='recent').items(max_tweets):
-        print status.text
+        print(status.text)
         if not hasattr(status, 'retweeted_status'):
-            print 'Found status {}'.format(status.id)
+            print('Found status {}'.format(status.id))
             matches.append(status)
     return matches
 
@@ -49,36 +49,36 @@ def get_tweeprints(tweets):
         if tweet.in_reply_to_status_id_str:
             prev_tweet = api.get_status(tweet.in_reply_to_status_id)
             matches.append(prev_tweet)
-            print 'Adding previous status {}'.format(prev_tweet.id)
+            print('Adding previous status {}'.format(prev_tweet.id))
         else:
             matches.append(tweet)
-            print 'Adding status {}'.format(tweet.id)
+            print('Adding status {}'.format(tweet.id))
     return matches
 
 def retweet_tweeprints(tweets):
     for tweet in tweets:
         if tweet.in_reply_to_status_id_str:
-            print 'Ignoring {} because it is not the first in the thread'.format(tweet.id)
+            print('Ignoring {} because it is not the first in the thread'.format(tweet.id))
             continue
         if tweet.user.screen_name == USER_NAME:
-            print 'Ignoring my own tweet'
+            print('Ignoring my own tweet')
             continue
         urls = [url for url in tweet.entities['urls'] if 'twitter' not in url['display_url']]
         # need to filter out by display_url to make sure we don't include links to other tweets (i.e., RTs) as a valid url
         if len(urls) == 0:
-            print 'Ignoring {} because there are no urls'.format(tweet.id)
+            print('Ignoring {} because there are no urls'.format(tweet.id))
             continue
         if not tweet.retweeted:
             try:
                 tweet.retweet()
-                print 'Retweeting {}'.format(tweet.id)
+                print('Retweeting {}'.format(tweet.id))
             except tweepy.TweepError as e:
-                print 'Already Retweeted {}'.format(tweet.id)
+                print('Already Retweeted {}'.format(tweet.id))
 
 def main():
     while True:
         last_id = get_last_tweet_id()
-        print 'Last id = {}'.format(last_id)
+        print('Last id = {}'.format(last_id))
         tweets = fetch_mentions(last_id)
         tweets = get_tweeprints(tweets)
         retweet_tweeprints(tweets)
