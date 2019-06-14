@@ -1,4 +1,5 @@
 import os
+import time
 import tweepy
 
 CONSUMER_KEY = os.environ['TWITTER_CONSUMER_KEY']
@@ -12,6 +13,7 @@ api = tweepy.API(auth)
 
 USER_NAME = 'tweeprint'
 HASHTAG = '#tweeprint'
+RUN_EVERY_N_SECONDS = 60*60*1 # e.g. 60*5 = tweets every five minutes
 
 def get_last_tweet_id():
     tweet = api.user_timeline(screen_name=USER_NAME, count=1)
@@ -74,11 +76,13 @@ def retweet_tweeprints(tweets):
                 print 'Already Retweeted {}'.format(tweet.id)
 
 def main():
-    last_id = get_last_tweet_id()
-    print 'Last id = {}'.format(last_id)
-    tweets = fetch_mentions(last_id)
-    tweets = get_tweeprints(tweets)
-    retweet_tweeprints(tweets)
+    while True:
+        last_id = get_last_tweet_id()
+        print 'Last id = {}'.format(last_id)
+        tweets = fetch_mentions(last_id)
+        tweets = get_tweeprints(tweets)
+        retweet_tweeprints(tweets)
+        time.sleep(RUN_EVERY_N_SECONDS)
 
 if __name__ == '__main__':
     main()
