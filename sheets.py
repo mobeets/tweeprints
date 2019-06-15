@@ -40,7 +40,7 @@ https://console.developers.google.com/iam-admin/serviceaccounts?authuser=2&proje
 #     wks.clear()
 #     wks.insert_rows(row=0, number=1, values=header_row)
 
-def add_rows(rows, sheet_key=SHEET_KEY):
+def add_rows_to_sheets(rows, sheet_key=SHEET_KEY):
 
     # authorization
     gc = pygsheets.authorize(service_file='tmp_credentials.json')
@@ -58,4 +58,4 @@ def add_rows(rows, sheet_key=SHEET_KEY):
 if __name__ == '__main__':
     # init_sheet(SHEET_NAME)
     rows = [[1,2],[3,4]]
-    add_rows(rows)
+    add_rows_to_sheets(rows)

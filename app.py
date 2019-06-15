@@ -1,7 +1,8 @@
 import os
 import time
 import tweepy
-from sheets import add_rows
+from sheets import add_rows_to_sheets
+from send_email import send_email
 
 try:
     from dotenv import load_dotenv
@@ -106,7 +107,8 @@ def main():
         tweets = retweet_tweeprints(tweets)
         rows = tweets_to_rows(tweets)
         print(rows)
-        add_rows(rows)
+        add_rows_to_sheets(rows)
+        send_email(rows)
         time.sleep(RUN_EVERY_N_SECONDS)
 
 if __name__ == '__main__':
