@@ -1,6 +1,14 @@
 import os
 import time
 import tweepy
+from sheets import add_rows
+
+try:
+    from dotenv import load_dotenv
+    dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+    load_dotenv(dotenv_path)
+except:
+    pass
 
 CONSUMER_KEY = os.environ['TWITTER_CONSUMER_KEY']
 CONSUMER_SECRET = os.environ['TWITTER_CONSUMER_SECRET']
@@ -78,13 +86,27 @@ def retweet_tweeprints(tweets):
                 print('Already Retweeted {}'.format(tweet.id))
     return outputs
 
+def tweets_to_rows(tweets):
+    """
+    Date, ID, User, URL, Text
+    """
+    rows = []
+    for tweet in tweets:
+        url = '{}/statuses/{}'.format(tweet.source_url, tweet.id)
+        row = [str(tweet.created_at), tweet.id, tweet.user.screen_name, url, tweet.text]
+        rows.append(row)
+    return rows
+
 def main():
     while True:
         last_id = get_last_tweet_id()
         print('Last id = {}'.format(last_id))
         tweets = fetch_mentions(last_id)
         tweets = get_tweeprints(tweets)
-        outputs = retweet_tweeprints(tweets)
+        tweets = retweet_tweeprints(tweets)
+        rows = tweets_to_rows(tweets)
+        print(rows)
+        add_rows(rows)
         time.sleep(RUN_EVERY_N_SECONDS)
 
 if __name__ == '__main__':
