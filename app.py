@@ -56,6 +56,7 @@ def get_tweeprints(tweets):
     return matches
 
 def retweet_tweeprints(tweets):
+    outputs = []
     for tweet in tweets:
         if tweet.in_reply_to_status_id_str:
             print('Ignoring {} because it is not the first in the thread'.format(tweet.id))
@@ -70,10 +71,12 @@ def retweet_tweeprints(tweets):
             continue
         if not tweet.retweeted:
             try:
-                tweet.retweet()
+                # tweet.retweet()
+                outputs.append(tweet)
                 print('Retweeting {}'.format(tweet.id))
             except tweepy.TweepError as e:
                 print('Already Retweeted {}'.format(tweet.id))
+    return outputs
 
 def main():
     while True:
@@ -81,7 +84,7 @@ def main():
         print('Last id = {}'.format(last_id))
         tweets = fetch_mentions(last_id)
         tweets = get_tweeprints(tweets)
-        retweet_tweeprints(tweets)
+        outputs = retweet_tweeprints(tweets)
         time.sleep(RUN_EVERY_N_SECONDS)
 
 if __name__ == '__main__':

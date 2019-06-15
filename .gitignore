@@ -3,3 +3,6 @@
 *.pyc
 .ipynb_checkpoints/
 Untitled.ipynb
+test.sh
+test.py
+credentials.json
