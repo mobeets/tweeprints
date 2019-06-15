@@ -7,3 +7,4 @@ test.sh
 test.py
 credentials.json
 client_secret.json
+tmp_credentials.json

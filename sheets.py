@@ -1,19 +1,33 @@
+import os
 import pygsheets # https://github.com/nithinmurali/pygsheets
 
-SHEET_NAME = 'tweeprints'
+try:
+    from dotenv import load_dotenv
+    dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+    load_dotenv(dotenv_path)
+except:
+    pass
+
 SHEET_KEY = '1MxRwVLjm2ZAb8MYYUa3M-v29wcRlgRx6WEhMl1I1dB8'
-HEADER_ROW = ['Date', 'ID', 'User', 'URL', 'Text']
 SERVICE_ACCOUNT = 'tweeprints@tweeprints-243816.iam.gserviceaccount.com'
+GOOGLE_APPLICATION_CREDENTIALS = os.environ['GOOGLE_APPLICATION_CREDENTIALS']
+open('tmp_credentials.json', 'w').write(GOOGLE_APPLICATION_CREDENTIALS)
 
 """
 To make this work, you need to create a Google sheet in your normal account,
  then share it with the SERVICE_ACCOUNT listed above.
 The google sheets api I'm using here has credentials associated with this service account, so it must have access.
 
+Also, need to run:
+    $ heroku config:set GOOGLE_APPLICATION_CREDENTIALS="$(< credentials.json)"
+This passes the contents of the credentials.json file to heroku
+
 User: william.langeford@gmail.com
 https://console.developers.google.com/iam-admin/serviceaccounts?authuser=2&project=tweeprints-243816
 """
 
+# SHEET_NAME = 'tweeprints'
+# HEADER_ROW = ['Date', 'ID', 'User', 'URL', 'Text']
 # def init_sheet(sheet_name=SHEET_NAME, header_row=HEADER_ROW):
 #     """
 #     create sheet, share it, and write header row
@@ -26,13 +40,13 @@ https://console.developers.google.com/iam-admin/serviceaccounts?authuser=2&proje
 #     wks.clear()
 #     wks.insert_rows(row=0, number=1, values=header_row)
 
-def add_rows(rows, sheet_key=SHEET_KEY, sheet_name=SHEET_NAME):
+def add_rows(rows, sheet_key=SHEET_KEY):
 
     # authorization
-    gc = pygsheets.authorize(service_file='credentials.json')
+    gc = pygsheets.authorize(service_file='tmp_credentials.json')
+    # gc = pygsheets.authorize(service_account_env_var='GOOGLE_APPLICATION_CREDENTIALS')
 
     # open the google spreadsheet
-    # sh = gc.open(sheet_name)
     sh = gc.open_by_key(sheet_key)
 
     # select the first sheet
