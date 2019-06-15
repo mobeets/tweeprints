@@ -25,11 +25,11 @@ HASHTAG = '#tweeprint'
 RUN_EVERY_N_SECONDS = 60*60*1 # e.g. 60*5 = tweets every five minutes
 
 def get_last_tweet_id():
-    tweet = api.user_timeline(screen_name=USER_NAME, count=1)
-    if len(tweet) == 0:
+    tweets = api.user_timeline(screen_name=USER_NAME, count=5)
+    if len(tweets) == 0:
         return None
     else:
-        return tweet[0].id
+        return tweets[-1].id
 
 def get_query():
     return HASHTAG + ' -filter:retweets'
