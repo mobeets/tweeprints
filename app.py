@@ -1,7 +1,7 @@
 import os
 import time
 import tweepy
-from sheets import add_rows_to_sheets
+from sheets import add_rows_to_sheets, get_rows_in_sheet
 from send_email import send_email
 
 try:
@@ -42,10 +42,12 @@ def fetch_mentions(last_id, max_tweets=200):
     for status in tweepy.Cursor(api.search, q=query,
         count=max_tweets, # tweet_mode='extended',
         since_id=last_id, result_type='recent').items(max_tweets):
+        print('--------------')
         print(status.text)
         if not hasattr(status, 'retweeted_status'):
             print('Found status {}'.format(status.id))
-            matches.append(status)
+            matches.extend(get_tweeprints([status]))
+            # matches.append(status)
     return matches
 
 def get_tweeprints(tweets):
@@ -64,7 +66,8 @@ def get_tweeprints(tweets):
         else:
             matches.append(tweet)
             print('Adding status {}'.format(tweet.id))
-    return matches
+    return retweet_tweeprints(matches)
+    # return matches
 
 def retweet_tweeprints(tweets):
     outputs = []
@@ -77,9 +80,9 @@ def retweet_tweeprints(tweets):
             continue
         urls = [url for url in tweet.entities['urls'] if 'twitter' not in url['display_url']]
         # need to filter out by display_url to make sure we don't include links to other tweets (i.e., RTs) as a valid url
-        if len(urls) == 0:
-            print('Ignoring {} because there are no urls'.format(tweet.id))
-            continue
+        # if len(urls) == 0:
+        #     print('Ignoring {} because there are no urls'.format(tweet.id))
+        #     continue
         if not tweet.retweeted:
             try:
                 # tweet.retweet()
@@ -93,11 +96,16 @@ def tweets_to_rows(tweets):
     """
     Date, ID, User, URL, Text
     """
+    old_rows = get_rows_in_sheet()
+    old_urls = [row[3] for row in old_rows]
     rows = []
     for tweet in tweets:
-        url = '{}/statuses/{}'.format(tweet.source_url, tweet.id)
+        url = '{}/{}/status/{}'.format(tweet.source_url, tweet.user.screen_name, tweet.id)
         row = [str(tweet.created_at), tweet.id, tweet.user.screen_name, url, tweet.text]
-        rows.append(row)
+        if url in old_urls:
+            print('Already added {} to sheet'.format(tweet.id))
+        else:
+            rows.append(row)
     return rows
 
 def main():
@@ -105,8 +113,8 @@ def main():
         last_id = get_last_tweet_id()
         print('Last id = {}'.format(last_id))
         tweets = fetch_mentions(last_id)
-        tweets = get_tweeprints(tweets)
-        tweets = retweet_tweeprints(tweets)
+        # tweets = get_tweeprints(tweets)
+        # tweets = retweet_tweeprints(tweets)
         rows = tweets_to_rows(tweets)
         print(rows)
         add_rows_to_sheets(rows)

@@ -40,8 +40,25 @@ https://console.developers.google.com/iam-admin/serviceaccounts?authuser=2&proje
 #     wks.clear()
 #     wks.insert_rows(row=0, number=1, values=header_row)
 
-def add_rows_to_sheets(rows, sheet_key=SHEET_KEY):
+def get_rows_in_sheet(sheet_key=SHEET_KEY):
+    """
+    return non-empty rows
+    """
+    # authorization
+    gc = pygsheets.authorize(service_file='tmp_credentials.json')
+    # gc = pygsheets.authorize(service_account_env_var='GOOGLE_APPLICATION_CREDENTIALS')
 
+    # open the google spreadsheet
+    sh = gc.open_by_key(sheet_key)
+
+    # select the first sheet
+    wks = sh[0]
+
+    # get non-empty rows
+    rows = wks.get_all_values(returnas='matrix')
+    return [row for row in rows if ''.join(row)]
+
+def add_rows_to_sheets(rows, sheet_key=SHEET_KEY):
     # authorization
     gc = pygsheets.authorize(service_file='tmp_credentials.json')
     # gc = pygsheets.authorize(service_account_env_var='GOOGLE_APPLICATION_CREDENTIALS')
