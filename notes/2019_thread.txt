@@ -1,0 +1,57 @@
+It's time for the 1st annual #tweeprint census! 🤓📊
+
+Since June of this year, I've been collecting as many neuroscience and neuro-related tweeprints on @tweeprint as I could find. I just analyzed all 251 of them, and wanted to share what I found. (1/n)
+
+-------------------
+
+First up, you might be wondering: What's a #tweeprint? A tweeprint is a twitter thread where someone gives a brief summary of their scientific research, usually with a link to a recent paper. It can be about any topic, but I've focused mostly on neuro-related ones. (2/n)
+
+-------------------
+
+Where are most tweeprinted papers published? 136 of 251 tweeprinted papers were on a preprint server (93 on biorxiv). What really surprised me here though was how many tweeprinted papers were published in higher-impact journals such as nature/cell/elife... (3/n)
+
+-------------------
+
+...For instance, there were tweeprints for TEN papers published in nature neuro (IF: 21), but only ONE published in j neurosci (IF: 6). Why is this? Is it that people are more excited about publicizing their work when it's in a high-impact journal? I'd love to know why. (4/n)
+
+[PLOT]
+
+-------------------
+
+One of the best things about tweeprints is it's a way to share your science with a broad range of scientists and non-scientists. And tweeprints get a lot of eyeballs!
+
+The distribution for # likes and RTs was roughly log-normal, with a median of 112 likes and 42 RTs. (5/n)
+
+[PLOT]
+
+-------------------
+
+Of course, the more followers you have, the more attention your tweeprint will get. Of users with the 10 most-liked tweeprints, the median number of followers was 7k. (All but two of those users were PIs!) Of all 251 tweeprints, the median was 0.13 likes per follower. (6/n)
+
+
+[PLOT]
+
+-------------------
+
+The top 3 most-liked tweeprints from 2019:
+1. Weight Agnostic NNs @hardmaru https://t.co/KAbZOw2Pz8
+2. High precision coding in mouse V1 @computingnature https://t.co/KE43xHzU33
+3. Cortical Neuron as a Deep Artificial Neural Net @DavidBeniaguev
+ https://t.co/dbdQmoVwrV (7/n)
+
+[PLOT]
+
+-------------------
+
+The top three most liked tweeprints from 2019:
+
+1. "Weight Agnostic Neural Networks" @hardmaru https://t.co/KAbZOw2Pz8
+2. "High precision coding in mouse visual cortex" @computingnature https://t.co/KE43xHzU33
+3. "A story of a Cortical Neuron as a Deep Artificial Neural Net" @DavidBeniaguev
+ https://t.co/dbdQmoVwrV
+
+-------------------
+
+Finally, if you're interested, the (slightly incomplete) list of tweeprints I've collected is here: https://docs.google.com/spreadsheets/d/1B9v9R9w4eaQhjaQI2G-IwaoVvuruEfz1fK7j8TMwYDc/edit?usp=sharing
+
+Also, please let me know if I have missed your tweeprint! (n/n)

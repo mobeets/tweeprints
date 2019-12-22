@@ -1,0 +1,23 @@
+251 total
+-----------
+136 *rxiv (93 bio, 38 arxiv, 4 psyarxiv, 1 medarxiv)
+37 nature (12 communications, 10 neuro, 7 nature, 2 human beh, 1 protocols, 1 scientific reports)
+22 cell (12 neuron, 5 current bio, 5 cell)
+12 elife
+6 plos
+4 physiology
+4 pnas
+3 sciencedirect
+3 science
+3 frontiersin
+1 jneurosci
+(21 other)
+
+For getting *rxiv data (if necessary):
+- https://www.rxivist.org/docs
+
+Summaries:
+- bar plot per journal
+- number per month
+- number per day of week
+- list of most liked or RT'd
